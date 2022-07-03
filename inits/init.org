@@ -217,6 +217,15 @@
     :global-minor-mode global-auto-revert-mode)
   #+end_src
 
+* Terminal
+
+** vterm
+
+    #+begin_src emacs-lisp
+    (leaf vterm
+      :ensure t)
+    #+end_src
+
 * org-mode
 
   #+begin_src emacs-lisp
@@ -228,8 +237,8 @@
              (org-edit-src-content-indentation . 0)
              (org-agenda-files . '("~/org"))
              (org-src-fontify-natively . t)
-             ;; (org-adapt-indentation . t)
-             (org-src-preserve-indentation . nil)
+             (org-adapt-indentation . t)
+             ;; (org-src-preserve-indentation . nil)
              (org-edit-src-content-indentation . 0))
     :config
     (plist-put org-format-latex-options :scale 1.2)
