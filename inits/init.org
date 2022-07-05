@@ -217,6 +217,15 @@
     :global-minor-mode global-auto-revert-mode)
   #+end_src
 
+* Terminal
+
+** vterm
+
+    #+begin_src emacs-lisp
+    (leaf vterm
+      :ensure t)
+    #+end_src
+
 * org-mode
 
   #+begin_src emacs-lisp
