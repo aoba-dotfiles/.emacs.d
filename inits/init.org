@@ -228,8 +228,8 @@
              (org-edit-src-content-indentation . 0)
              (org-agenda-files . '("~/org"))
              (org-src-fontify-natively . t)
-             ;; (org-adapt-indentation . t)
-             (org-src-preserve-indentation . nil)
+             (org-adapt-indentation . t)
+             ;; (org-src-preserve-indentation . nil)
              (org-edit-src-content-indentation . 0))
     :config
     (plist-put org-format-latex-options :scale 1.2)
@@ -593,6 +593,7 @@
    (leaf undo-tree
      :diminish ""
      :ensure t
+     :custom ((undo-tree-auto-save-history . nil))
      :global-minor-mode global-undo-tree-mode)
    #+end_src
 
