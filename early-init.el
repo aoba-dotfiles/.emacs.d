@@ -6,6 +6,12 @@
 
 ;;; Code:
 
+;; for native-comp
+(setenv "LIBRARY_PATH" "/opt/homebrew/opt/gcc/lib/gcc/11:/opt/homebrew/opt/libgccjit/lib/gcc/11:/opt/homebrew/opt/gcc/lib/gcc/11/gcc/aarch64-apple-darwin21/11")
+
+;; suppress native-comp's warning
+(setq native-comp-async-report-warnings-errors nil)
+
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
 (add-hook 'emacs-startup-hook
@@ -38,7 +44,8 @@
   ;; disable icon and text in frame title
   (setq ns-use-proxy-icon nil)
   (push '(ns-transparent-titlebar . t) default-frame-alist)
-  (push '(ns-use-native-fullscreen . nil) default-frame-alist))
+  (push '(ns-use-native-fullscreen . nil) default-frame-alist)
+  )
 
 ;; message box
 (defalias 'message-box 'message)
