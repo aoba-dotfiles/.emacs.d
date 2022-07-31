@@ -884,16 +884,26 @@
     #+begin_src emacs-lisp
     (leaf java
       :config
-      (leaf lsp-java
-        :ensure t
-        :custom ((lsp-java-format-enabled . t)
-                 (lsp-java-vmargs . '("-Xmx1G"
-                                      "-XX:+UseG1GC"
-                                      "-XX:+UseStringDeduplication"
-                                      "-javaagent:/Users/aoba/.m2/repository/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar"
-                                      "-Xbootclasspath/a:/Users/aoba/.m2/repository/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar")))
-        :hook ((java-mode-hook . lsp)
-               (java-mode-hook . (lambda () (setq c-basic-offset 2))))))
+      (let* ((lombok-version "1.18.24")
+               (lombok-jar-dir (expand-file-name (format "~/.m2/repository/org/projectlombok/lombok/%s/" lombok-version)))
+               (lombok-jar-path (expand-file-name (format "~/.m2/repository/org/projectlombok/lombok/%s/lombok-%s.jar" lombok-version lombok-version)))
+               (lombok-jar-url (format "https://repo1.maven.org/maven2/org/projectlombok/lombok/%s/lombok-%s.jar" lombok-version lombok-version)))
+        (progn
+          (if (not (file-exists-p lombok-jar-path))
+              (progn
+                (make-directory lombok-jar-dir t)
+                (url-copy-file lombok-jar-url lombok-jar-path)))
+
+          (leaf lsp-java
+          :ensure t
+          :custom ((lsp-java-format-enabled . t)
+                   (lsp-java-vmargs . `("-Xmx1G"
+                                        "-XX:+UseG1GC"
+                                        "-XX:+UseStringDeduplication"
+                                        ,(concat "-javaagent:" lombok-jar-path)
+                                        ,(concat "-Xbootclasspath/a:" lombok-jar-path))))
+          :hook ((java-mode-hook . lsp)
+                 (java-mode-hook . (lambda () (setq c-basic-offset 2))))))))
     #+end_src
 
 * Writing
